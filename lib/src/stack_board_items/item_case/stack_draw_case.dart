@@ -140,9 +140,14 @@ class _StackDrawCaseState extends State<StackDrawCase> {
                   : null,
             ),
             child: Column(
-              children: DrawingBoard.defaultTools(dc.contentType, _controller)
-                  .map((DefToolItem item) => _DefToolItem(item: item))
-                  .toList(),
+              children: <Widget>[
+                DrawingControllerProvider(
+                  controller: _controller,
+                  child: Column(
+                    children: _defaultTools(),
+                  ),
+                ),
+              ],
             ),
           ),
         );
@@ -255,35 +260,70 @@ class _StackDrawCaseState extends State<StackDrawCase> {
       child: child,
     );
   }
-}
 
-/// * 默认工具项
-/// * Default tool item
-class _DefToolItem extends StatelessWidget {
-  const _DefToolItem({
-    Key? key,
-    required this.item,
-  }) : super(key: key);
-
-  final DefToolItem item;
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: TextButton(
-        onPressed: item.onTap,
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.black,
-          padding: EdgeInsets.zero,
-        ),
-        child: Icon(
-          item.icon,
-          size: 14,
-          color: item.isActive ? item.activeColor : item.color,
-        ),
+  List<Widget> _defaultTools() {
+    return <Widget>[
+      DefaultToolItem(
+        icon: Icons.edit,
+        content: SimpleLine,
+        iconSize: 14,
+        color: Colors.black54,
+        activeColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        onTap: (DrawingController controller) =>
+            controller.setPaintContent(SimpleLine()),
       ),
-    );
+      DefaultToolItem(
+        icon: Icons.brush,
+        content: SmoothLine,
+        iconSize: 14,
+        color: Colors.black54,
+        activeColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        onTap: (DrawingController controller) =>
+            controller.setPaintContent(SmoothLine()),
+      ),
+      DefaultToolItem(
+        icon: Icons.rectangle_outlined,
+        content: Rectangle,
+        iconSize: 14,
+        color: Colors.black54,
+        activeColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        onTap: (DrawingController controller) =>
+            controller.setPaintContent(Rectangle()),
+      ),
+      DefaultToolItem(
+        icon: Icons.circle_outlined,
+        content: Circle,
+        iconSize: 14,
+        color: Colors.black54,
+        activeColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        onTap: (DrawingController controller) =>
+            controller.setPaintContent(Circle()),
+      ),
+      DefaultToolItem(
+        icon: Icons.show_chart,
+        content: StraightLine,
+        iconSize: 14,
+        color: Colors.black54,
+        activeColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        onTap: (DrawingController controller) =>
+            controller.setPaintContent(StraightLine()),
+      ),
+      DefaultToolItem(
+        icon: Icons.cleaning_services,
+        content: Eraser,
+        iconSize: 14,
+        color: Colors.black54,
+        activeColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        onTap: (DrawingController controller) =>
+            controller.setPaintContent(Eraser()),
+      ),
+    ];
   }
 }
 
